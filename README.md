@@ -4,8 +4,6 @@ A simple and private Lightning P2P exchange you can use directly from StartOS.
 ## Dependencies
 - [docker](https://docs.docker.com/get-docker)
 - [docker-buildx](https://docs.docker.com/buildx/working-with-buildx/)
-- [yq](https://mikefarah.gitbook.io/yq)
-- [deno](https://deno.land/)
 - [make](https://www.gnu.org/software/make/)
 - [start-sdk](https://github.com/Start9Labs/start-os/tree/master/backend)
 
@@ -13,44 +11,35 @@ A simple and private Lightning P2P exchange you can use directly from StartOS.
 Prepare your StartOS build enviroment. In this example we are using Ubuntu 20.04.
 
 1. Install docker
-```
-curl -fsSL https://get.docker.com -o- | bash
-sudo usermod -aG docker "$USER"
-exec sudo su -l $USER
-```
+  ```
+  curl -fsSL https://get.docker.com -o- | bash
+  sudo usermod -aG docker "$USER"
+  exec sudo su -l $USER
+  ```
 2. Set buildx as the default builder
-```
-docker buildx install
-docker buildx create --use
-```
+  ```
+  docker buildx install
+  docker buildx create --use
+  ```
 3. Enable cross-arch emulated builds in docker
 ```
 docker run --privileged --rm linuxkit/binfmt:v0.8
 ```
-4. Install yq
-```
-wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
-  tar xz && mv ${BINARY} /usr/bin/yq
-```
-5. Install deno
-```
-cargo install deno
-```
-6. Install essentials build packages
+4. Install essentials build packages
 ```
 sudo apt-get install -y build-essential openssl libssl-dev libc6-dev clang libclang-dev ca-certificates
 ```
-7. Install Rust
+5. Install Rust
 ```
 curl https://sh.rustup.rs -sSf | sh
 # Choose nr 1 (default install)
 source $HOME/.cargo/env
 ```
-8. Build and install start-sdk
+6. Build and install start-sdk
 ```
 cd ~/ && git clone --recursive https://github.com/Start9Labs/start-os.git
 cd start-os/backend/
-./install-sdk.sh
+make sdk
 start-sdk init
 ```
 Now you are ready to build your **robosats** service
@@ -59,7 +48,7 @@ Now you are ready to build your **robosats** service
 Clone the project locally. 
 
 ```
-git clone https://github.com/kn0wmad/robosats-wrapper.git
+git clone https://github.com/Start9Labs/robosats-startos.git
 cd robosats-wrapper
 ```
 
