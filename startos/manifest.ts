@@ -13,7 +13,6 @@ export const manifest = setupManifest({
     short: 'A simple and private p2p bitcoin exchange',
     long: 'RoboSats is a simple and private way to exchange bitcoin for national currencies. Robosats simplifies the peer-to-peer user experience and uses lightning hold invoices to minimize custody and trust requirements. The deterministically generated avatars help users stick to best privacy practices.',
   },
-  assets: [],
   volumes: ['main'],
   images: {
     robosats: {
