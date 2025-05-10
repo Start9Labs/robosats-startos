@@ -20,7 +20,12 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   const robosatsSub = await sdk.SubContainer.of(
     effects,
     { imageId: 'robosats' },
-    sdk.Mounts.of().addVolume('main', null, '/root', false),
+    sdk.Mounts.of().mountVolume({
+      volumeId: 'main',
+      subpath: null,
+      mountpoint: '/root',
+      readonly: false,
+    }),
     'robosats-sub',
   )
 
