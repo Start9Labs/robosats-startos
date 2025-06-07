@@ -41,12 +41,14 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   return sdk.Daemons.of(effects, started, healthReceipts).addDaemon('primary', {
     subcontainer: robosatsSub,
-    command: ['./robosats-client.sh'],
-    env: {
-      APP_HOST: 'robosats.startos',
-      APP_PORT: '12596',
-      TOR_PROXY_IP: 'startos',
-      TOR_PROXY_PORT: '9050',
+    exec: {
+      command: ['./robosats-client.sh'],
+      env: {
+        APP_HOST: 'robosats.startos',
+        APP_PORT: '12596',
+        TOR_PROXY_IP: 'startos',
+        TOR_PROXY_PORT: '9050',
+      },
     },
     ready: {
       display: 'Web Interface',
