@@ -21,9 +21,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     'robosats-sub',
   )
 
-  await robosatsSub.exec(['chmod a+x /usr/local/bin/*.sh'])
-  await robosatsSub.exec(['chmod a+x *.sh'])
-
   /**
    * ======================== Daemons ========================
    *
@@ -34,7 +31,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   return sdk.Daemons.of(effects, started).addDaemon('primary', {
     subcontainer: robosatsSub,
     exec: {
-      command: ['./robosats-client.sh'],
+      command: ['sh', 'robosats-client.sh'],
       env: {
         APP_HOST: 'robosats.startos',
         APP_PORT: '12596',
