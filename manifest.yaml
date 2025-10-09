@@ -1,8 +1,8 @@
 id: robosats
 title: "RoboSats"
-version: 0.8.1
+version: 0.8.2
 release-notes: |
-  * Updated to RoboSats v0.8.1-alpha [Release Notes](https://github.com/RoboSats/robosats/releases/tag/v0.8.1-alpha)
+  * Updated to RoboSats v0.8.2-alpha [Release Notes](https://github.com/RoboSats/robosats/releases/tag/v0.8.2-alpha)
   * Brand new mobile view
   * New in-app private notifications system using nostr
   * Revertible payments warning
