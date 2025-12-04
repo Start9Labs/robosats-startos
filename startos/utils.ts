@@ -1,1 +1,1 @@
-export const uiPort = 12596
+export const port = 12596
