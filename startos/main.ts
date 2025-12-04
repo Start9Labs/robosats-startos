@@ -1,5 +1,4 @@
 import { sdk } from './sdk'
-import { uiPort } from './utils'
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   /**
@@ -9,7 +8,15 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   console.info('Starting Robosats!')
 
-  const robosatsSub = await sdk.SubContainer.of(
+  /**
+   * ======================== Daemons ========================
+   *
+   * In this section, we create one or more daemons that define the service runtime.
+   *
+   * Each daemon defines its own health check, which can optionally be exposed to the user.
+   */
+  return sdk.Daemons.of(effects, started).addDaemon('primary', {
+    subcontainer: await sdk.SubContainer.of(
     effects,
     { imageId: 'robosats' },
     sdk.Mounts.of().mountVolume({
@@ -19,30 +26,20 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       readonly: false,
     }),
     'robosats-sub',
-  )
-
-  /**
-   * ======================== Daemons ========================
-   *
-   * In this section, we create one or more daemons that define the service runtime.
-   *
-   * Each daemon defines its own health check, which can optionally be exposed to the user.
-   */
-  return sdk.Daemons.of(effects, started).addDaemon('primary', {
-    subcontainer: robosatsSub,
+  ),
     exec: {
-      command: ['sh', 'robosats-client.sh'],
+      command: sdk.useEntrypoint(),
       env: {
-        APP_HOST: 'robosats.startos',
-        APP_PORT: '12596',
-        TOR_PROXY_IP: 'startos',
-        TOR_PROXY_PORT: '9050',
+        // APP_HOST: 'robosats.startos',
+        // APP_PORT: String(port),
+        // TOR_PROXY_IP: 'startos',
+        // TOR_PROXY_PORT: '9050',
       },
     },
     ready: {
       display: 'Web Interface',
       fn: () =>
-        sdk.healthCheck.checkPortListening(effects, uiPort, {
+        sdk.healthCheck.checkWebUrl(effects, 'http://robosats.startos:12596/selfhosted', {
           successMessage: 'The web interface is ready',
           errorMessage: 'The web interface is not ready',
         }),
