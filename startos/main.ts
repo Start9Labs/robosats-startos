@@ -17,32 +17,34 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   return sdk.Daemons.of(effects, started).addDaemon('primary', {
     subcontainer: await sdk.SubContainer.of(
-    effects,
-    { imageId: 'robosats' },
-    sdk.Mounts.of().mountVolume({
-      volumeId: 'main',
-      subpath: null,
-      mountpoint: '/root',
-      readonly: false,
-    }),
-    'robosats-sub',
-  ),
+      effects,
+      { imageId: 'robosats' },
+      sdk.Mounts.of().mountVolume({
+        volumeId: 'main',
+        subpath: null,
+        mountpoint: '/root',
+        readonly: false,
+      }),
+      'robosats-sub',
+    ),
     exec: {
       command: sdk.useEntrypoint(),
       env: {
-        // APP_HOST: 'robosats.startos',
-        // APP_PORT: String(port),
-        // TOR_PROXY_IP: 'startos',
-        // TOR_PROXY_PORT: '9050',
+        TOR_PROXY_IP: 'startos',
+        TOR_PROXY_PORT: '9050',
       },
     },
     ready: {
       display: 'Web Interface',
       fn: () =>
-        sdk.healthCheck.checkWebUrl(effects, 'http://robosats.startos:12596/selfhosted', {
-          successMessage: 'The web interface is ready',
-          errorMessage: 'The web interface is not ready',
-        }),
+        sdk.healthCheck.checkWebUrl(
+          effects,
+          'http://robosats.startos:12596/selfhosted',
+          {
+            successMessage: 'The web interface is ready',
+            errorMessage: 'The web interface is not ready',
+          },
+        ),
     },
     requires: [],
   })
