@@ -25,7 +25,7 @@ export const manifest = setupManifest({
   images: {
     robosats: {
       source: {
-        dockerTag: 'recksato/robosats-client:v0.8.2-alpha',
+        dockerTag: 'recksato/robosats-client:v0.8.3-alpha',
       },
       arch,
     } as SDKImageInputSpec,
