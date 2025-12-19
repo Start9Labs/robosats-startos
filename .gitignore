@@ -1,6 +1,8 @@
-robosats.s9pk
-image.tar
-scripts/*.js
+*.s9pk
+startos/*.js
+node_modules/
 .DS_Store
 .vscode/
-docker-images/
+docker-images
+javascript
+ncc-cache
