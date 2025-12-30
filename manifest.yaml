@@ -1,9 +1,13 @@
 id: robosats
 title: "RoboSats"
-version: 0.8.0
+version: 0.8.3
 release-notes: |
-  * Updated to RoboSats v0.8.0-alpha [Release Notes](https://github.com/RoboSats/robosats/releases/tag/v0.8.0-alpha)
-  * Enable LAN access to RoboSats web interface
+  * Updated to RoboSats v0.8.3-alpha [Release Notes](https://github.com/RoboSats/robosats/releases/tag/v0.8.3-alpha)
+  * Brand new mobile view
+  * New in-app private notifications system using nostr
+  * Revertible payments warning
+  * Order description added as optional attribute. Library updates and bugs fixing.
+  * 2 new coordinators, some bug fixing and security updates.
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/robosats-startos"
 upstream-repo: "https://github.com/RoboSats/robosats"
@@ -75,7 +79,7 @@ interfaces:
 dependencies: {}
 alerts:
   start: #|
-    #ATTENTION: Your browser must have Tor support to use this service.
+  #ATTENTION: Your browser must have Tor support to use this service.
 # Specifies how backups should be run for this service. The default EmbassyOS provided option is to use the duplicity backup library on a system image (compat)
 backup:
   create:
