@@ -1,8 +1,8 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 import { rm } from 'fs/promises'
 
-export const v_0_8_4_0_a0 = VersionInfo.of({
-  version: '0.8.4:0-alpha.0',
+export const v_0_8_4_0_b0 = VersionInfo.of({
+  version: '0.8.4:0-beta.0',
   releaseNotes: {
     en_US: 'Revamped for StartOS 0.4.0',
     es_ES: 'Renovado para StartOS 0.4.0',
