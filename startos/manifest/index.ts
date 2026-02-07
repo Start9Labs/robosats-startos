@@ -10,8 +10,7 @@ export const manifest = setupManifest({
   supportSite: 'https://github.com/RoboSats/robosats-startos/issues',
   marketingSite: 'https://learn.robosats.com/',
   donationUrl: 'https://learn.robosats.com/contribute/donate/',
-  docsUrl:
-    'https://github.com/Start9Labs/robosats-startos/blob/update/040/docs/instructions.md',
+  docsUrl: 'https://learn.robosats.com/',
   description: i18n.description,
   volumes: ['main'],
   images: {
