@@ -31,7 +31,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     exec: {
       command: sdk.useEntrypoint(),
       env: {
-        TOR_PROXY_IP: 'startos',
+        TOR_PROXY_IP: 'tor.startos',
         TOR_PROXY_PORT: '9050',
       },
     },

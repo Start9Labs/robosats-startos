@@ -1,16 +1,23 @@
 import { setupManifest } from '@start9labs/start-sdk'
 import i18n from './i18n'
 
+const depTorDescription = {
+  en_US: 'Used to connect to RoboSats coordinators privately',
+  es_ES: 'Se usa para conectarse a los coordinadores de RoboSats de forma privada',
+  de_DE: 'Wird für die private Verbindung zu RoboSats-Koordinatoren verwendet',
+  pl_PL: 'Używany do prywatnego łączenia się z koordynatorami RoboSats',
+  fr_FR: 'Utilisé pour se connecter aux coordinateurs RoboSats de manière privée',
+}
+
 export const manifest = setupManifest({
   id: 'robosats',
   title: 'Robosats',
   license: 'AGPL-V3',
-  wrapperRepo: 'https://github.com/RoboSats/robosats-startos',
+  packageRepo: 'https://github.com/RoboSats/robosats-startos/tree/update/040',
   upstreamRepo: 'https://github.com/Reckless-Satoshi/robosats',
-  supportSite: 'https://github.com/RoboSats/robosats-startos/issues',
-  marketingSite: 'https://learn.robosats.com/',
+  marketingUrl: 'https://learn.robosats.com/',
   donationUrl: 'https://learn.robosats.com/contribute/donate/',
-  docsUrl: 'https://learn.robosats.com/',
+  docsUrls: ['https://learn.robosats.com/'],
   description: i18n.description,
   volumes: ['main'],
   images: {
@@ -21,5 +28,14 @@ export const manifest = setupManifest({
       arch: ['x86_64', 'aarch64'],
     },
   },
-  dependencies: {},
+  dependencies: {
+    tor: {
+      optional: false,
+      description: depTorDescription,
+      metadata: {
+        title: 'Tor',
+        icon: 'https://raw.githubusercontent.com/Start9Labs/tor-startos/65faea17febc739d910e8c26ff4e61f6333487a8/icon.svg',
+      },
+    },
+  },
 })
