@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon.png" alt="Project Logo" width="21%">
+  <img src="icon.svg" alt="Project Logo" width="21%">
 </p>
 
 # RoboSats for StartOS
@@ -18,7 +18,7 @@ This package runs **1 container**:
 
 | Container | Image | Purpose |
 |-----------|-------|---------|
-| robosats | `recksato/robosats-client:v0.8.4-alpha` | Self-hosted web client |
+| robosats | `recksato/robosats-client` | Self-hosted web client |
 
 ## Volumes
 
@@ -34,7 +34,7 @@ Mounted at `/root` inside the container.
 
 | Setting | Value | Purpose |
 |---------|-------|---------|
-| `TOR_PROXY_IP` | `startos` | StartOS Tor SOCKS proxy |
+| `TOR_PROXY_IP` | `tor.startos` | Tor SOCKS proxy |
 | `TOR_PROXY_PORT` | `9050` | Tor proxy port |
 
 ### User-Configurable Settings
@@ -56,7 +56,9 @@ None. All interaction is through the web interface.
 
 ## Dependencies
 
-None. The client connects to external RoboSats coordinators over Tor.
+| Dependency | Requirement | Health Checks | Description |
+|------------|-------------|---------------|-------------|
+| Tor | Running | tor | Required for private coordinator connections |
 
 ## Backups
 
@@ -103,10 +105,9 @@ All coordinator communication happens over Tor for privacy.
 
 ```yaml
 package_id: robosats
-upstream_version: 0.8.4-alpha
 containers:
   - name: robosats
-    image: recksato/robosats-client:v0.8.4-alpha
+    image: recksato/robosats-client
 
 volumes:
   main:
@@ -120,10 +121,15 @@ interfaces:
 
 actions: []
 
-dependencies: []
+dependencies:
+  tor:
+    required: true
+    kind: running
+    health_checks:
+      - tor
 
 auto_configure:
-  - TOR_PROXY_IP: startos
+  - TOR_PROXY_IP: tor.startos
   - TOR_PROXY_PORT: 9050
 
 health_checks:
