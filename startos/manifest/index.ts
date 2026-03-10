@@ -3,10 +3,12 @@ import i18n from './i18n'
 
 const depTorDescription = {
   en_US: 'Used to connect to RoboSats coordinators privately',
-  es_ES: 'Se usa para conectarse a los coordinadores de RoboSats de forma privada',
+  es_ES:
+    'Se usa para conectarse a los coordinadores de RoboSats de forma privada',
   de_DE: 'Wird für die private Verbindung zu RoboSats-Koordinatoren verwendet',
   pl_PL: 'Używany do prywatnego łączenia się z koordynatorami RoboSats',
-  fr_FR: 'Utilisé pour se connecter aux coordinateurs RoboSats de manière privée',
+  fr_FR:
+    'Utilisé pour se connecter aux coordinateurs RoboSats de manière privée',
 }
 
 export const manifest = setupManifest({
@@ -17,7 +19,7 @@ export const manifest = setupManifest({
   upstreamRepo: 'https://github.com/Reckless-Satoshi/robosats',
   marketingUrl: 'https://learn.robosats.com/',
   donationUrl: 'https://learn.robosats.com/contribute/donate/',
-  docsUrls: ['https://learn.robosats.com/'],
+  docsUrls: ['https://github.com/RoboSats/robosats'],
   description: i18n.description,
   volumes: ['main'],
   images: {
