@@ -4,7 +4,7 @@
 
 # RoboSats for StartOS
 
-This repository packages [RoboSats](https://github.com/Reckless-Satoshi/robosats) for StartOS. This document describes what makes this package different from a default RoboSats deployment.
+This repository packages [RoboSats](https://github.com/RoboSats/robosats) for StartOS. This document describes what makes this package different from a default RoboSats deployment.
 
 For general RoboSats usage and features, see the [upstream documentation](https://github.com/RoboSats/robosats).
 
