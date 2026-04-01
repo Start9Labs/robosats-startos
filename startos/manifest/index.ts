@@ -15,7 +15,7 @@ export const manifest = setupManifest({
   id: 'robosats',
   title: 'Robosats',
   license: 'AGPL-V3',
-  packageRepo: 'https://github.com/RoboSats/robosats-startos/tree/update/040',
+  packageRepo: 'https://github.com/RoboSats/robosats-startos',
   upstreamRepo: 'https://github.com/Reckless-Satoshi/robosats',
   marketingUrl: 'https://learn.robosats.com/',
   donationUrl: 'https://learn.robosats.com/contribute/donate/',
