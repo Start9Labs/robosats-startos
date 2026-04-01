@@ -1,41 +1,75 @@
 <p align="center">
-  <img src="icon.svg" alt="Project Logo" width="21%">
+  <img src="icon.svg" alt="RoboSats Logo" width="21%">
 </p>
 
-# RoboSats for StartOS
+# RoboSats on StartOS
 
-This repository packages [RoboSats](https://github.com/RoboSats/robosats) for StartOS. This document describes what makes this package different from a default RoboSats deployment.
+> **Upstream docs:** <https://learn.robosats.com/>
+>
+> Everything not listed in this document should behave the same as upstream
+> RoboSats. If a feature, setting, or behavior is not mentioned
+> here, the upstream documentation is accurate and fully applicable.
 
-For general RoboSats usage and features, see the [upstream documentation](https://github.com/RoboSats/robosats).
+[RoboSats](https://github.com/RoboSats/robosats) is a peer-to-peer Bitcoin exchange over Lightning. This package runs the **self-hosted client**, not a coordinator. The client connects to RoboSats coordinators over Tor to facilitate P2P Bitcoin trades.
 
-## How This Differs from Upstream
+---
 
-This package runs the RoboSats **self-hosted client**, not a coordinator. The client connects to RoboSats coordinators over Tor to facilitate P2P Bitcoin trades. All traffic is routed through StartOS's Tor proxy for privacy.
+## Table of Contents
 
-## Container Runtime
+- [Image and Container Runtime](#image-and-container-runtime)
+- [Volume and Data Layout](#volume-and-data-layout)
+- [Installation and First-Run Flow](#installation-and-first-run-flow)
+- [Configuration Management](#configuration-management)
+- [Network Access and Interfaces](#network-access-and-interfaces)
+- [Actions (StartOS UI)](#actions-startos-ui)
+- [Backups and Restore](#backups-and-restore)
+- [Health Checks](#health-checks)
+- [Dependencies](#dependencies)
+- [Limitations and Differences](#limitations-and-differences)
+- [What Is Unchanged from Upstream](#what-is-unchanged-from-upstream)
+- [Contributing](#contributing)
+- [Quick Reference for AI Consumers](#quick-reference-for-ai-consumers)
 
-This package runs **1 container**:
+---
 
-| Container | Image | Purpose |
-|-----------|-------|---------|
-| robosats | `recksato/robosats-client` | Self-hosted web client |
+## Image and Container Runtime
 
-## Volumes
+| Property | Value |
+|----------|-------|
+| Image | `recksato/robosats-client` |
+| Architectures | x86_64, aarch64 |
+| Entrypoint | Default upstream entrypoint |
 
-| Volume | Contents | Backed Up |
-|--------|----------|-----------|
-| `main` | Client data, robot tokens | Yes |
+---
 
-Mounted at `/root` inside the container.
+## Volume and Data Layout
+
+| Volume | Mount Point | Purpose |
+|--------|-------------|---------|
+| `main` | `/root` | Client data, robot tokens |
+
+---
+
+## Installation and First-Run Flow
+
+| Step | Upstream | StartOS |
+|------|----------|---------|
+| Installation | Docker or hosted client | Install from marketplace or sideload `.s9pk` |
+| Tor setup | Manual Tor proxy configuration | Auto-configured via Tor dependency |
+| First use | Open web UI, generate robot | Same — open web UI and generate robot |
+
+No setup wizard or credentials needed. The client is ready to use immediately after install.
+
+---
 
 ## Configuration Management
 
-### Auto-Configured Settings
+### Auto-Configured by StartOS
 
 | Setting | Value | Purpose |
 |---------|-------|---------|
-| `TOR_PROXY_IP` | `tor.startos` | Tor SOCKS proxy |
-| `TOR_PROXY_PORT` | `9050` | Tor proxy port |
+| `TOR_PROXY_IP` | `tor.startos` | Tor SOCKS proxy address |
+| `TOR_PROXY_PORT` | `9050` | Tor SOCKS proxy port |
 
 ### User-Configurable Settings
 
@@ -44,53 +78,70 @@ All configuration is done through the RoboSats web interface:
 - Order creation and management
 - Coordinator selection
 
-## Network Interfaces
+---
 
-| Interface | Type | Port | Description |
-|-----------|------|------|-------------|
-| Web UI | ui | 12596 | RoboSats client interface |
+## Network Access and Interfaces
 
-## Actions
+| Interface | Port | Protocol | Type | Description |
+|-----------|------|----------|------|-------------|
+| Web UI | 12596 | HTTP | ui | RoboSats client interface |
+
+---
+
+## Actions (StartOS UI)
 
 None. All interaction is through the web interface.
 
-## Dependencies
+---
 
-| Dependency | Requirement | Health Checks | Description |
-|------------|-------------|---------------|-------------|
-| Tor | Running | tor | Required for private coordinator connections |
+## Backups and Restore
 
-## Backups
+**Included in backup:**
 
-All data is backed up:
-- `main` volume - robot tokens and client state
+- `main` volume — robot tokens and client state
+
+**Restore behavior:**
+
+- All data is restored
+- No reconfiguration needed
 
 **Important:** Your robot token is your identity. Back it up to recover active orders.
 
+---
+
 ## Health Checks
 
-| Check | Method | Success Condition |
-|-------|--------|-------------------|
-| Web Interface | HTTP check | `/selfhosted` endpoint responds |
+| Check | Display | Method | Messages |
+|-------|---------|--------|----------|
+| Web Interface | "Web Interface" | HTTP check (`/selfhosted`) | "The web interface is ready" / "The web interface is not ready" |
 
-## How RoboSats Works
+---
 
-1. **Generate Robot**: Create a disposable robot identity (no KYC)
-2. **Create/Take Order**: Make or accept a buy/sell order for Bitcoin
-3. **Lightning Escrow**: Funds held in Lightning hodl invoices during trade
-4. **Fiat Exchange**: Complete fiat payment outside RoboSats
-5. **Settlement**: Lightning payment released upon confirmation
+## Dependencies
+
+| Property | Value |
+|----------|-------|
+| **Service** | Tor (`tor`) |
+| **Required** | Yes |
+| **Version constraint** | `>=0.4.9.5` |
+| **Health checks** | `tor` must pass |
+| **Mounted volumes** | None |
+| **Purpose** | Private connections to RoboSats coordinators |
 
 All coordinator communication happens over Tor for privacy.
 
-## Limitations
+---
 
-1. **Client only**: This is the web client, not a coordinator; you connect to external coordinators
-2. **Requires Lightning wallet**: Need an external Lightning wallet to send/receive payments
-3. **Tor latency**: All traffic routed through Tor may be slower than clearnet
-4. **Coordinator trust**: Must trust coordinators for escrow; client doesn't run its own
+## Limitations and Differences
 
-## What's Unchanged
+1. **Client only** — This is the web client, not a coordinator; you connect to external coordinators.
+2. **Requires Lightning wallet** — Need an external Lightning wallet to send/receive payments.
+3. **Tor latency** — All traffic routed through Tor may be slower than clearnet.
+4. **Coordinator trust** — Must trust coordinators for escrow; client doesn't run its own.
+
+---
+
+## What Is Unchanged from Upstream
 
 - Full RoboSats client functionality
 - Robot identity system
@@ -101,43 +152,28 @@ All coordinator communication happens over Tor for privacy.
 
 ---
 
-## Quick Reference (YAML)
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions and development workflow.
+
+---
+
+## Quick Reference for AI Consumers
 
 ```yaml
 package_id: robosats
-containers:
-  - name: robosats
-    image: recksato/robosats-client
-
+image: recksato/robosats-client
+architectures:
+  - x86_64
+  - aarch64
 volumes:
-  main:
-    backup: true
-    mountpoint: /root
-
-interfaces:
-  ui:
-    type: ui
-    port: 12596
-
-actions: []
-
+  main: /root
+ports:
+  ui: 12596
 dependencies:
-  tor:
-    required: true
-    kind: running
-    health_checks:
-      - tor
-
-auto_configure:
-  - TOR_PROXY_IP: tor.startos
-  - TOR_PROXY_PORT: 9050
-
-health_checks:
-  - name: Web Interface
-    method: http_check
-    url: http://robosats.startos:12596/selfhosted
-
-not_available:
-  - coordinator_functionality
-  - built_in_lightning_wallet
+  - tor
+startos_managed_env_vars:
+  - TOR_PROXY_IP
+  - TOR_PROXY_PORT
+actions: none
 ```
