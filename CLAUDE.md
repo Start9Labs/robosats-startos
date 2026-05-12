@@ -1,4 +1,3 @@
-## How the upstream version is pulled
-- dockerTag in `startos/manifest/index.ts`: `recksato/robosats-client:v<version>-alpha`
+# CLAUDE.md
 
-> Docker image tag includes `-alpha` suffix.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the doc map and contribution workflow.

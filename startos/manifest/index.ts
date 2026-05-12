@@ -19,7 +19,6 @@ export const manifest = setupManifest({
   upstreamRepo: 'https://github.com/Reckless-Satoshi/robosats',
   marketingUrl: 'https://learn.robosats.com/',
   donationUrl: 'https://learn.robosats.com/contribute/donate/',
-  docsUrls: ['https://github.com/RoboSats/robosats'],
   description: i18n.description,
   volumes: ['main'],
   images: {
