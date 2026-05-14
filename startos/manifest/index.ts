@@ -15,17 +15,16 @@ export const manifest = setupManifest({
   id: 'robosats',
   title: 'Robosats',
   license: 'AGPL-V3',
-  packageRepo: 'https://github.com/RoboSats/robosats-startos',
+  packageRepo: 'https://github.com/Start9Labs/robosats-startos',
   upstreamRepo: 'https://github.com/Reckless-Satoshi/robosats',
   marketingUrl: 'https://learn.robosats.com/',
   donationUrl: 'https://learn.robosats.com/contribute/donate/',
-  docsUrls: ['https://github.com/RoboSats/robosats'],
   description: i18n.description,
   volumes: ['main'],
   images: {
     robosats: {
       source: {
-        dockerTag: 'recksato/robosats-client:v0.8.4-alpha',
+        dockerTag: 'recksato/robosats-client:v0.8.5-alpha',
       },
       arch: ['x86_64', 'aarch64'],
     },
